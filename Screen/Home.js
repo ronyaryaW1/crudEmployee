@@ -129,7 +129,10 @@ const Home = ({ navigation }) => {
   const renderList = (item) => {
     return (
       <View>
-        <Card style={styles.mycard}>
+        <Card
+          style={styles.mycard}
+          onPress={() => navigation.navigate('Profile', { item })}
+        >
           <View style={styles.cardView}>
             <Image
               style={{ width: 50, height: 50, borderRadius: 50 / 2 }}
