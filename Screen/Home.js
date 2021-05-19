@@ -1,130 +1,27 @@
-import React from 'react';
-import { View, Text, StyleSheet, Image, FlatList } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import {
+  View,
+  Text,
+  StyleSheet,
+  Image,
+  FlatList,
+  ActivityIndicator,
+} from 'react-native';
 import { Card, FAB } from 'react-native-paper';
 
 const Home = ({ navigation }) => {
-  const data = [
-    {
-      id: '1',
-      name: 'mukes',
-      email: 'abc@gmail.com',
-      salary: '5 lpa',
-      phone: '12345',
-      position: 'fe',
-      picture:
-        'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
-    },
-    {
-      id: '2',
-      name: 'rukes',
-      email: 'abc@gmail.com',
-      salary: '5 lpa',
-      phone: '12345',
-      position: 'fe',
-      picture:
-        'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
-    },
-    {
-      id: '3',
-      name: 'dukes',
-      email: 'abc@gmail.com',
-      salary: '5 lpa',
-      phone: '12345',
-      position: 'fe',
-      picture:
-        'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
-    },
-    {
-      id: '4',
-      name: 'cukes',
-      email: 'abc@gmail.com',
-      salary: '5 lpa',
-      phone: '12345',
-      position: 'fe',
-      picture:
-        'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
-    },
-    {
-      id: '5',
-      name: 'bukes',
-      email: 'abc@gmail.com',
-      salary: '5 lpa',
-      phone: '12345',
-      position: 'fe',
-      picture:
-        'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
-    },
-    {
-      id: '6',
-      name: 'mukes',
-      email: 'abc@gmail.com',
-      salary: '5 lpa',
-      phone: '12345',
-      position: 'fe',
-      picture:
-        'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
-    },
-    {
-      id: '7',
-      name: 'rukes',
-      email: 'abc@gmail.com',
-      salary: '5 lpa',
-      phone: '12345',
-      position: 'fe',
-      picture:
-        'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
-    },
-    {
-      id: '8',
-      name: 'dukes',
-      email: 'abc@gmail.com',
-      salary: '5 lpa',
-      phone: '12345',
-      position: 'fe',
-      picture:
-        'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
-    },
-    {
-      id: '9',
-      name: 'cukes',
-      email: 'abc@gmail.com',
-      salary: '5 lpa',
-      phone: '12345',
-      position: 'fe',
-      picture:
-        'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
-    },
-    {
-      id: '10',
-      name: 'bukes',
-      email: 'abc@gmail.com',
-      salary: '5 lpa',
-      phone: '12345',
-      position: 'fe',
-      picture:
-        'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
-    },
-    {
-      id: '11',
-      name: 'bukes',
-      email: 'abc@gmail.com',
-      salary: '5 lpa',
-      phone: '12345',
-      position: 'fe',
-      picture:
-        'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
-    },
-    {
-      id: '12',
-      name: 'bukes',
-      email: 'abc@gmail.com',
-      salary: '5 lpa',
-      phone: '12345',
-      position: 'fe',
-      picture:
-        'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
-    },
-  ];
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    fetch('http://0dd138dd1c06.ngrok.io/')
+      .then((res) => res.json())
+      .then((results) => {
+        setData(results);
+        setLoading(false);
+      });
+  }, []);
+
+  console.log('data', data);
 
   const renderList = (item) => {
     return (
@@ -137,7 +34,9 @@ const Home = ({ navigation }) => {
             <Image
               style={{ width: 50, height: 50, borderRadius: 50 / 2 }}
               source={{
-                uri: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
+                uri:
+                  item.picture ||
+                  'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=60',
               }}
             />
             <View style={{ marginLeft: 10 }}>
@@ -152,20 +51,26 @@ const Home = ({ navigation }) => {
 
   return (
     <View style={{ flex: 1, marginTop: 10 }}>
-      <FlatList
-        data={data}
-        renderItem={({ item }) => {
-          return renderList(item);
-        }}
-        keyExtractor={(item) => item.id}
-      />
-      <FAB
-        style={styles.fab}
-        small
-        icon="plus"
-        theme={{ colors: { accent: 'red' } }}
-        onPress={() => navigation.navigate('CreateEmployee')}
-      />
+      {loading ? (
+        <ActivityIndicator size="small" color="#0000ff" />
+      ) : (
+        <>
+          <FlatList
+            data={data}
+            renderItem={({ item }) => {
+              return renderList(item);
+            }}
+            keyExtractor={(item) => item._id}
+          />
+          <FAB
+            style={styles.fab}
+            small
+            icon="plus"
+            theme={{ colors: { accent: 'red' } }}
+            onPress={() => navigation.navigate('CreateEmployee')}
+          />
+        </>
+      )}
     </View>
   );
 };

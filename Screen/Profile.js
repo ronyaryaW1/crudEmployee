@@ -4,7 +4,7 @@ import { Title, Card, Button } from 'react-native-paper';
 import LinearGradient from 'react-native-linear-gradient';
 
 const Profile = (props) => {
-  const { id, name, picture, phone, salary, email, position } =
+  const { _id, name, picture, phone, salary, email, position } =
     props.route.params.item;
 
   const openDial = () => {
