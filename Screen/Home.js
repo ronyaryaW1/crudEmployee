@@ -6,19 +6,27 @@ import {
   Image,
   FlatList,
   ActivityIndicator,
+  Alert,
 } from 'react-native';
 import { Card, FAB } from 'react-native-paper';
 
 const Home = ({ navigation }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-  useEffect(() => {
+
+  const fetchData = () => {
     fetch('http://0dd138dd1c06.ngrok.io/')
       .then((res) => res.json())
       .then((results) => {
         setData(results);
         setLoading(false);
+      })
+      .catch((err) => {
+        Alert.alert('Smonething went wrong');
       });
+  };
+  useEffect(() => {
+    fetchData();
   }, []);
 
   console.log('data', data);
@@ -51,26 +59,28 @@ const Home = ({ navigation }) => {
 
   return (
     <View style={{ flex: 1, marginTop: 10 }}>
-      {loading ? (
+      <FlatList
+        data={data}
+        renderItem={({ item }) => {
+          return renderList(item);
+        }}
+        keyExtractor={(item) => item._id}
+        onRefresh={() => fetchData()}
+        refreshing={loading}
+      />
+      <FAB
+        style={styles.fab}
+        small
+        icon="plus"
+        theme={{ colors: { accent: 'red' } }}
+        onPress={() => navigation.navigate('CreateEmployee')}
+      />
+      {/* {loading ? (
         <ActivityIndicator size="small" color="#0000ff" />
       ) : (
         <>
-          <FlatList
-            data={data}
-            renderItem={({ item }) => {
-              return renderList(item);
-            }}
-            keyExtractor={(item) => item._id}
-          />
-          <FAB
-            style={styles.fab}
-            small
-            icon="plus"
-            theme={{ colors: { accent: 'red' } }}
-            onPress={() => navigation.navigate('CreateEmployee')}
-          />
         </>
-      )}
+      )} */}
     </View>
   );
 };

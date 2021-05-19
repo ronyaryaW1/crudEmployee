@@ -65,6 +65,11 @@ const CreateEmployee = ({ navigation }) => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
+        setPicture(data.path);
+        setModal(false);
+      })
+      .catch((err) => {
+        Alert.alert('Smonething went wrong');
       });
   };
 
@@ -88,6 +93,9 @@ const CreateEmployee = ({ navigation }) => {
       .then((data) => {
         Alert.alert(`${data.name} is saved successfuly`);
         navigation.navigate('Home');
+      })
+      .catch((err) => {
+        Alert.alert('Smonething went wrong upload data');
       });
   };
 
